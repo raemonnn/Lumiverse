@@ -1,0 +1,434 @@
+/* Global Styles */
+body {
+    background-color: #f5f5f5;
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Sidebar (Dark Gray) */
+#sidebar-wrapper {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: #3a3a3a; /* Dark Gray */
+    padding-top: 20px;
+}
+
+.feedback {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.feedback img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.feedback-content {
+    flex: 1;
+}
+
+.feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feedback-header h5 {
+    margin: 0;
+}
+
+.date {
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.feedback-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit {
+    background-color: #505050;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background-color: #3a3a3a;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-edit:hover,
+.btn-delete:hover {
+    opacity: 0.85;
+}
+
+
+
+/* Feedback Section Styling */
+.feedback-container {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 15px; /* Prevent scrollbar overlap */
+}
+
+.feedback {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profileimg {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 15px;
+
+}
+
+.feedback img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.feedback-content {
+    flex: 1;
+}
+
+.feedback-content h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.feedback-content .date {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.feedback-content p {
+    margin-top: 5px;
+    font-size: 1rem;
+    color: #333;
+}
+
+
+.sidebar-heading {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    padding-bottom: 10px;
+}
+
+.list-group-item {
+    background-color: #3a3a3a;
+    color: white;
+    border: none;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #505050;
+}
+
+/* Page Content */
+#page-content-wrapper {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+/* Navbar/Header (Medium Gray) */
+.navbar {
+    background-color: #b0b0b0 !important; /* Medium Gray */
+    padding: 15px;
+    border-bottom: 1px solid #999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Lumiverse Text on Header */
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.navbar a {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Profile Section */
+.navbar .nav-item .nav-link {
+    color: black;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-item img {
+    margin-right: 5px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.navbar .dropdown-menu {
+    background-color: #b0b0b0;
+    border: none;
+}
+
+.navbar .dropdown-menu .dropdown-item {
+    color: black;
+    padding: 10px;
+    transition: background 0.3s ease;
+}
+
+.navbar .dropdown-menu .dropdown-item:hover {
+    background-color: #999;
+}
+
+/* Dashboard Content */
+.container h3 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Cards */
+.card {
+    background-color: #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+/* Charts */
+canvas {
+    max-width: 100%;
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Animations */
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+/* Floating Label Effect */
+.floating-label {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.floating-label input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: transparent;
+    color: #333;
+    font-size: 16px;
+    outline: none;
+}
+
+.floating-label label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    transition: all 0.3s ease-in-out;
+    color: #999;
+    pointer-events: none;
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+    top: 5px;
+    left: 10px;
+    font-size: 12px;
+    color: #666;
+}
+
+.sidebar {
+    width: 200px;
+    position: fixed;
+    height: 100%;
+    background: #333;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #575757;
+}
+
+.content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.section {
+    display: none;
+}
+
+.section:first-child {
+    display: block;
+}
+
+/* Rounded Image for Admin and Users */
+.profile-img {
+    width: 40px;   /* Adjust size */
+    height: 40px;  /* Adjust size */
+    border-radius: 50%;  /* Makes the image rounded */
+    object-fit: cover;  /* Ensures the image maintains its aspect ratio */
+}
+
+/* Team Section Styles */
+#teamSection {
+    background-color: #f8f9fa; /* Light background */
+    padding: 40px 0;
+}
+
+#teamSection h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+#teamSection p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px; /* You can adjust the height based on your image aspect ratio */
+    object-fit: cover;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Modern style for profile images */
+.profile-img {
+    width: 120px; /* Set image size */
+    height: 120px; /* Make image circular */
+    object-fit: cover;
+    border-radius: 50%; /* Make the image round */
+    margin-bottom: 20px;
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+/* Add a hover effect on the profile image */
+.profile-img:hover {
+    transform: scale(1.1); /* Slightly zoom in on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+}
+
+/* Card styling */
+.card {
+    border: none; /* Remove card border */
+    border-radius: 15px; /* Rounded corners for card */
+    overflow: hidden; /* Ensures rounded corners are applied properly */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for modern look */
+}
+
+/* Modern text styles */
+#teamSection h4 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #333;
+}
+
+#teamSection p {
+    font-size: 1rem;
+    color: #6c757d;
+    line-height: 1.5;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .profile-img {
+        width: 100px; /* Smaller image size on mobile */
+        height: 100px;
+    }
+
+    #teamSection h4 {
+        font-size: 1.5rem; /* Smaller title on mobile */
+    }
+
+    #teamSection p {
+        font-size: 0.9rem; /* Smaller description text */
+    }
+}
+
+
+
+/* Fixed Footer Styling */
+.footer {
+    background-color: #3a3a3a;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures it stays on top of other content */
+}
+
+.footer p {
+    margin: 0;
+    font-size: 1rem;
+}

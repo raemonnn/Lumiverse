@@ -1,0 +1,15 @@
+{
+    "users": {
+      "user1": {
+        "username": "raemon",
+        "email": "lumiverse@gmail.com",
+        "password": "admin1" 
+      },
+      "user2": {
+        "username": "jane_doe",
+        "email": "janedoe@example.com",
+        "password": "$2y$10$Kb6wT9M1XBpIseR3eHeBs.A33iH88w34vDGoAP0UvWqEmEs5aUPPO" 
+      }
+    }
+  }
+  
