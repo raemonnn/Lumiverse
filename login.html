@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Lumiverse</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6e00ff;
+            --primary-dark: #4a00b4;
+            --secondary: #00f0ff;
+            --dark: #0a0a1a;
+            --darker: #070712;
+            --light: #f8f9fa;
+            --lighter: #ffffff;
+            --gray: #a1a1aa;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Force dark background - added !important to ensure override */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark) !important;
+            background-image: radial-gradient(circle at 70% 30%, rgba(110, 0, 255, 0.15) 0%, rgba(0, 0, 0, 0) 50%) !important;
+            color: var(--light) !important;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Ensure all other elements inherit dark theme */
+        html {
+            background-color: var(--dark) !important;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        
+        p, li, a:not(.btn), label {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: var(--gray);
+        }
+        
+        /* Navigation */
+        .glass-nav {
+            padding: 20px 0;
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+        
+        .brand-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            margin-left: 10px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Auth Container */
+        .auth-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 40px 20px;
+        }
+        
+        .auth-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-header img {
+            height: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .auth-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--lighter);
+        }
+        
+        .auth-header p {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        /* Form Styles */
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--light);
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+        
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            color: var(--light);
+            box-shadow: 0 0 0 0.25rem rgba(110, 0, 255, 0.25);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--lighter);
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+        
+        .password-toggle:hover {
+            color: var(--secondary);
+        }
+        
+        .password-strength small {
+            font-size: 0.8rem;
+            color: var(--gray);
+            opacity: 0.7;
+        }
+        
+        .form-check-input {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .form-check-label {
+            color: var(--gray);
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            margin-top: 10px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(110, 0, 255, 0.3);
+        }
+        
+        /* Prefilled Email */
+        .prefilled-email {
+            background: rgba(0, 240, 255, 0.1);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--secondary);
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+        
+        .prefilled-email i {
+            color: var(--secondary);
+        }
+        
+        /* Auth Footer */
+        .auth-footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .auth-footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-footer a:hover {
+            color: var(--lighter);
+            text-decoration: underline;
+        }
+        
+        /* Notification Alert */
+        .alert-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 576px) {
+            .auth-card {
+                padding: 30px 20px;
+            }
+            
+            .auth-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .alert-notification {
+                min-width: calc(100% - 40px);
+                left: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Glass Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="brand-name">LUMIVERSE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#how-it-works">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#download">Download</a></li>
+                    <li class="nav-item"><a class="nav-link btn-login" href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notification Alert (positioned fixed) -->
+    <div id="notificationAlert" class="alert-notification animate__animated animate__fadeInRight" style="display: none;">
+        <div class="alert alert-dismissible fade show" role="alert">
+            <span id="notificationMessage"></span>
+            <button type="button" class="btn-close" onclick="hideNotification()"></button>
+        </div>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-card animate__animated animate__fadeIn">
+            <div class="auth-header">
+                <h2>Welcome Back</h2>
+                <p>Login to access your smart home dashboard</p>
+            </div>
+            
+            <!-- Prefilled email notification (from signup) -->
+            <div id="prefilledEmailNotice" class="prefilled-email" style="display: none;">
+                <i class="fas fa-check-circle me-2"></i>
+                <span id="prefilledEmailText"></span>
+            </div>
+            
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="loginEmail" required>
+                </div>
+                <div class="mb-3 password-container">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" required>
+                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    <div class="password-strength">
+                        <small>Password must be at least 6 characters with letters and numbers</small>
+                    </div>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100" id="loginButton">
+                    <span id="loginText">Login</span>
+                    <span id="loginSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                </button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+                <p><a href="#" id="forgotPassword">Forgot password?</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <script>
+    // Notification functions
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notificationAlert');
+        const messageEl = document.getElementById('notificationMessage');
+        
+        notification.style.display = 'block';
+        notification.querySelector('.alert').className = `alert alert-${type} alert-dismissible fade show`;
+        messageEl.textContent = message;
+        
+        // Auto-hide after 5 seconds
+        setTimeout(hideNotification, 5000);
+    }
+    
+    function hideNotification() {
+        const notification = document.getElementById('notificationAlert');
+        notification.style.display = 'none';
+    }
+
+    // Password toggle visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('loginPassword');
+        const icon = this;
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    });
+
+    // Check for email parameter in URL (from signup or password reset)
+    document.addEventListener('DOMContentLoaded', () => {
+        const auth = firebase.auth();
+        
+        // Check URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const emailParam = urlParams.get('email');
+        const verifiedParam = urlParams.get('verified');
+        const resetParam = urlParams.get('reset');
+        
+        // Prefill email if coming from signup
+        if (emailParam) {
+            const emailInput = document.getElementById('loginEmail');
+            emailInput.value = emailParam;
+            
+            const prefilledNotice = document.getElementById('prefilledEmailNotice');
+            const prefilledText = document.getElementById('prefilledEmailText');
+            
+            prefilledNotice.style.display = 'block';
+            prefilledText.textContent = `Account created! Please login with your new credentials.`;
+        }
+        
+        // Show verification success message
+        if (verifiedParam === 'true') {
+            showNotification('Email verified successfully! You can now login.', 'success');
+        }
+        
+        // Show password reset success message
+        if (resetParam === 'true') {
+            showNotification('Password reset successfully! You can now login with your new password.', 'success');
+        }
+        
+        // Auto-redirect if already logged in
+        auth.onAuthStateChanged((user) => {
+            if (user && user.emailVerified) {
+                window.location.href = 'dashboard.html';
+            } else if (user) {
+                // User is logged in but not verified
+                showNotification('Please verify your email to access the dashboard.', 'warning');
+            }
+        });
+
+        // Remember me functionality
+        const rememberMe = localStorage.getItem('rememberMe') === 'true';
+        if (rememberMe) {
+            document.getElementById('rememberMe').checked = true;
+            const savedEmail = localStorage.getItem('savedEmail');
+            if (savedEmail) {
+                document.getElementById('loginEmail').value = savedEmail;
+            }
+        }
+    });
+
+    // Remember me checkbox handler
+    document.getElementById('rememberMe').addEventListener('change', function() {
+        localStorage.setItem('rememberMe', this.checked);
+    });
+
+    // Save email when remember me is checked
+    document.getElementById('loginEmail').addEventListener('blur', function() {
+        if (document.getElementById('rememberMe').checked) {
+            localStorage.setItem('savedEmail', this.value);
+        }
+    });
+    </script>
+</body>
+</html>

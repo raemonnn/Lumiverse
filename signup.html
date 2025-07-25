@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Lumiverse</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6e00ff;
+            --primary-dark: #4a00b4;
+            --secondary: #00f0ff;
+            --dark: #0a0a1a;
+            --darker: #070712;
+            --light: #f8f9fa;
+            --lighter: #ffffff;
+            --gray: #a1a1aa;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark) !important;
+            background-image: radial-gradient(circle at 70% 30%, rgba(110, 0, 255, 0.15) 0%, rgba(0, 0, 0, 0) 50%) !important;
+            color: var(--light) !important;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        
+        p, li, a:not(.btn), label {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: var(--gray);
+        }
+        
+        /* Navigation */
+        .glass-nav {
+            padding: 20px 0;
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+        
+        .brand-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            margin-left: 10px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Auth Container */
+        .auth-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 40px 20px;
+        }
+        
+        .auth-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-header img {
+            height: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .auth-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--lighter);
+        }
+        
+        .auth-header p {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        /* Form Styles */
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--light);
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+        
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            color: var(--light);
+            box-shadow: 0 0 0 0.25rem rgba(110, 0, 255, 0.25);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--lighter);
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+        
+        .password-toggle:hover {
+            color: var(--secondary);
+        }
+        
+        .password-strength {
+            margin-top: 8px;
+        }
+        
+        .progress {
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        
+        .password-requirements {
+            font-size: 0.8rem;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .form-check-input {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .form-check-label {
+            color: var(--gray);
+        }
+        
+        .form-check-label a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .form-check-label a:hover {
+            color: var(--lighter);
+            text-decoration: underline;
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            margin-top: 10px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(110, 0, 255, 0.3);
+        }
+        
+        /* Auth Footer */
+        .auth-footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .auth-footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-footer a:hover {
+            color: var(--lighter);
+            text-decoration: underline;
+        }
+        
+        /* Notification Alert */
+        .alert-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Modern Modal Styling */
+    .glass-card {
+        background: rgba(10, 10, 26, 0.9) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(110, 0, 255, 0.3) !important;
+        color: #f8f9fa;
+    }
+    
+    .modal-header {
+        border-bottom: 1px solid rgba(110, 0, 255, 0.3);
+    }
+    
+    .modal-footer {
+        border-top: 1px solid rgba(110, 0, 255, 0.3);
+    }
+    
+    .btn-close-white {
+        filter: invert(1);
+    }
+    
+    .text-gradient {
+        background: linear-gradient(135deg, #6e00ff, #00f0ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline;
+    }
+    
+    .divider {
+        height: 2px;
+        width: 100px;
+        margin: 10px 0;
+    }
+    
+    .gradient-divider {
+        background: linear-gradient(135deg, #6e00ff, #00f0ff);
+    }
+    
+    .modern-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+    
+    .modern-list li {
+        padding: 8px 0;
+        position: relative;
+        padding-left: 30px;
+    }
+    
+    .modern-list li:before {
+        content: "•";
+        color: #00f0ff;
+        font-size: 1.5rem;
+        position: absolute;
+        left: 0;
+        top: 2px;
+    }
+    
+    section h5 {
+        color: #00f0ff;
+        margin-bottom: 15px;
+    }
+    
+    section h5 i {
+        width: 25px;
+        text-align: center;
+    }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 576px) {
+            .auth-card {
+                padding: 30px 20px;
+            }
+            
+            .auth-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .alert-notification {
+                min-width: calc(100% - 40px);
+                left: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Glass Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="brand-name">LUMIVERSE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#how-it-works">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#download">Download</a></li>
+                    <li class="nav-item"><a class="nav-link btn-login" href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notification Alert -->
+    <div id="notificationAlert" class="alert-notification animate__animated animate__fadeInRight" style="display: none;">
+        <div class="alert alert-dismissible fade show" role="alert">
+            <span id="notificationMessage"></span>
+            <button type="button" class="btn-close" onclick="hideNotification()"></button>
+        </div>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-card animate__animated animate__fadeIn">
+            <div class="auth-header">
+                <h2>Create Account</h2>
+                <p>Become the head of your smart home</p>
+            </div>
+            
+            <form id="signupForm">
+                <div class="mb-3">
+                    <label for="signupName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="signupName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="signupEmail" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="signupEmail" required>
+                </div>
+                <div class="mb-3 password-container">
+                    <label for="signupPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="signupPassword" required>
+                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    <div class="password-strength">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <small class="password-requirements">Password must be at least 6 characters with letters and numbers</small>
+                    </div>
+                </div>
+                <div class="mb-3 password-container">
+                    <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="signupConfirmPassword" required>
+                    <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
+                    <small class="text-danger" id="passwordMatchError" style="display: none;">Passwords don't match</small>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="termsAgreement" required>
+                    <label class="form-check-label" for="termsAgreement">I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a></label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100" id="signupButton">
+                    <span id="signupText">Create Account</span>
+                    <span id="signupSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                </button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+   <!-- Terms of Service Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-file-contract me-2"></i>Lumiverse Terms of Service</h3>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <h4 class="text-gradient">Last Updated: <span id="currentMonth"></span> 2023</h4>
+                    <div class="divider gradient-divider"></div>
+                </div>
+
+                <section class="mb-4">
+                    <h5><i class="fas fa-rocket me-2"></i>1. Acceptance of Terms</h5>
+                    <p>By accessing or using the Lumiverse smart home ecosystem ("Service"), you agree to be bound by these Terms of Service ("Terms"). These Terms apply to all users of the Service, including without limitation users who are contributors of content, information, and other materials.</p>
+                </section>
+
+                <section class="mb-4">
+                    <h5><i class="fas fa-user-shield me-2"></i>2. Account Terms</h5>
+                    <ul class="modern-list">
+                        <li>You must be at least 13 years old to use this Service</li>
+                        <li>You are responsible for maintaining the security of your account and password</li>
+                        <li>You are responsible for all activities that occur under your account</li>
+                        <li>You must be the head of household to create a family ecosystem</li>
+                    </ul>
+                </section>
+
+                <section class="mb-4">
+                    <h5><i class="fas fa-home me-2"></i>3. Smart Home Responsibilities</h5>
+                    <p>As a user of Lumiverse, you agree to:</p>
+                    <ul class="modern-list">
+                        <li>Properly configure and maintain your smart home devices</li>
+                        <li>Not use the Service for any illegal or unauthorized purpose</li>
+                        <li>Not interfere with or disrupt the Service or servers/networks connected to the Service</li>
+                        <li>Comply with all regulations regarding home automation in your jurisdiction</li>
+                    </ul>
+                </section>
+
+                <section class="mb-4">
+                    <h5><i class="fas fa-ban me-2"></i>4. Prohibited Uses</h5>
+                    <p>You may not use the Service to:</p>
+                    <ul class="modern-list">
+                        <li>Violate any laws or regulations</li>
+                        <li>Infringe on intellectual property rights</li>
+                        <li>Harass, abuse, or harm others</li>
+                        <li>Interfere with other users' smart home systems</li>
+                        <li>Attempt to gain unauthorized access to systems or networks</li>
+                    </ul>
+                </section>
+
+                <section class="mb-4">
+                    <h5><i class="fas fa-gavel me-2"></i>5. Termination</h5>
+                    <p>Lumiverse reserves the right to:</p>
+                    <ul class="modern-list">
+                        <li>Modify or terminate the Service for any reason</li>
+                        <li>Refuse service to anyone for any reason</li>
+                        <li>Remove content that violates these Terms</li>
+                    </ul>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">I Understand</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-shield-alt me-2"></i>Lumiverse Privacy Policy</h3>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <h4 class="text-gradient">Effective: <span id="currentMonth2"></span> 2023</h4>
+                    <div class="divider gradient-divider"></div>
+                </div>
+
+                <section class="mb-4">
+                    <h5><i class="fas fa-database me-2"></i>1. Information We Collect</h5>
+                    <p>To provide our smart home services, we collect:</p>
+                    <ul class="modern-list">
+                        <li><strong>Account Information:</strong> Name, email, contact details</li>
+                        <li><strong>Device Data:</strong> Smart device status, configurations, and usage patterns</li>
+                        <li><strong>Usage Data:</strong> How you interact with our Service</li>
+                        <li><strong>Technical Data:</strong> IP addresses, device types, operating systems</li>
+                    </ul>
+                </section>
+
+                <section class="mb-4">
+                    <h5><i class="fas fa-cog me-2"></i>2. How We Use Your Information</h5>
+                    <p>Your data helps us:</p>
+                    <ul class="modern-list">
+                        <li>Provide and maintain the Service</li>
+                        <li>Improve and personalize your smart home experience</li>
+                        <li>Develop new features and functionality</li>
+                        <li>Communicate with you about service updates</li>
+                        <li>Ensure system security and prevent fraud</li>
+                    </ul>
+                </section>
+
+                <section class="mb-4">
+                    <h5><i class="fas fa-share-square me-2"></i>3. Data Sharing</h5>
+                    <p>We may share information with:</p>
+                    <ul class="modern-list">
+                        <li><strong>Service Providers:</strong> For hosting, analytics, and customer support</li>
+                        <li><strong>Smart Device Manufacturers:</strong> Only when necessary for integration</li>
+                        <li><strong>Legal Compliance:</strong> When required by law or to protect rights</li>
+                    </ul>
+                    <p class="mt-2">We <strong>do not</strong> sell your personal data to third parties.</p>
+                </section>
+
+                <section class="mb-4">
+                    <h5><i class="fas fa-lock me-2"></i>4. Data Security</h5>
+                    <p>We implement:</p>
+                    <ul class="modern-list">
+                        <li>End-to-end encryption for all communications</li>
+                        <li>Regular security audits</li>
+                        <li>Access controls to protect your information</li>
+                        <li>Secure data storage practices</li>
+                    </ul>
+                </section>
+
+                <section class="mb-4">
+                    <h5><i class="fas fa-user-cog me-2"></i>5. Your Rights</h5>
+                    <p>You have the right to:</p>
+                    <ul class="modern-list">
+                        <li>Access and request a copy of your data</li>
+                        <li>Correct inaccurate information</li>
+                        <li>Request deletion of your data</li>
+                        <li>Opt-out of certain data collection</li>
+                        <li>Withdraw consent where applicable</li>
+                    </ul>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">I Understand</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        // Notification functions
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notificationAlert');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            notification.style.display = 'block';
+            notification.querySelector('.alert').className = `alert alert-${type} alert-dismissible fade show`;
+            messageEl.textContent = message;
+            
+            // Auto-hide after 5 seconds
+            setTimeout(hideNotification, 5000);
+        }
+        
+        function hideNotification() {
+            const notification = document.getElementById('notificationAlert');
+            notification.style.display = 'none';
+        }
+
+        // Password toggle visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('signupPassword');
+            const icon = this;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('signupConfirmPassword');
+            const icon = this;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        // Password match validation
+        document.getElementById('signupConfirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = this.value;
+            const errorElement = document.getElementById('passwordMatchError');
+            
+            if (password && confirmPassword && password !== confirmPassword) {
+                errorElement.style.display = 'block';
+            } else {
+                errorElement.style.display = 'none';
+            }
+        });
+
+        // Password strength indicator
+        document.getElementById('signupPassword').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBar = document.querySelector('.password-strength .progress-bar');
+            const requirementsText = document.querySelector('.password-requirements');
+            
+            let strength = 0;
+            
+            // Length check
+            if (password.length >= 6) strength += 25;
+            if (password.length >= 8) strength += 25;
+            
+            // Complexity checks
+            if (/\d/.test(password)) strength += 25; // Has numbers
+            if (/[a-zA-Z]/.test(password)) strength += 25; // Has letters
+            
+            // Update strength bar
+            strengthBar.style.width = strength + '%';
+            
+            // Change color based on strength
+            if (strength < 50) {
+                strengthBar.className = 'progress-bar bg-danger';
+            } else if (strength < 75) {
+                strengthBar.className = 'progress-bar bg-warning';
+            } else {
+                strengthBar.className = 'progress-bar bg-success';
+            }
+            
+            // Update requirements text color
+            if (password.length >= 6 && /\d/.test(password) && /[a-zA-Z]/.test(password)) {
+                requirementsText.classList.remove('text-muted');
+                requirementsText.classList.add('text-success');
+            } else {
+                requirementsText.classList.remove('text-success');
+                requirementsText.classList.add('text-muted');
+            }
+        });
+
+        // Form submission handler
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            const submitBtn = document.getElementById('signupButton');
+            const submitText = document.getElementById('signupText');
+            const spinner = document.getElementById('signupSpinner');
+            
+            submitText.textContent = 'Creating Account...';
+            spinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+            
+            // Simulate processing (in real app, this would be Firebase auth)
+            setTimeout(() => {
+                // Hide spinner and reset button
+                submitText.textContent = 'Create Account';
+                spinner.classList.add('d-none');
+                submitBtn.disabled = false;
+                
+                // Show success notification
+                showNotification('Account created successfully! Please check your email for verification.', 'success');
+                
+                // Redirect to login after 3 seconds
+                setTimeout(() => {
+                    const email = document.getElementById('signupEmail').value;
+                    window.location.href = `login.html?email=${encodeURIComponent(email)}`;
+                }, 3000);
+            }, 2000);
+        });
+
+        // Force dark background on load as fallback
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.backgroundColor = '#0a0a1a';
+            document.body.style.backgroundImage = 'radial-gradient(circle at 70% 30%, rgba(110, 0, 255, 0.15) 0%, rgba(0, 0, 0, 0) 50%)';
+        });
+
+        // Set current month in terms and privacy
+        document.addEventListener('DOMContentLoaded', function() {
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                            "July", "August", "September", "October", "November", "December"];
+            const currentMonth = monthNames[new Date().getMonth()];
+            
+            document.getElementById('currentMonth').textContent = currentMonth;
+            document.getElementById('currentMonth2').textContent = currentMonth;
+        });
+    
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+</body>
+</html>
