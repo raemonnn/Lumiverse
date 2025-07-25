@@ -185,7 +185,7 @@ if (signupForm) {
 }
 
 // Login Form Submission
-// Update the login form submission in your auth.js
+// Updated Login Form Submission
 if (loginForm) {
     loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -200,40 +200,46 @@ if (loginForm) {
         submitBtn.disabled = true;
         
         try {
+            // 1. Sign in user
             const userCredential = await auth.signInWithEmailAndPassword(email, password);
             const user = userCredential.user;
             
-            // Check email verification
+            // 2. Force refresh of user data (critical for verification status)
+            await user.reload();
+            
+            // 3. Check verification status
             if (!user.emailVerified) {
                 await auth.signOut();
                 throw {
                     code: 'auth/email-not-verified',
-                    message: 'Please verify your email first. Check your inbox.'
+                    message: 'Please verify your email first. Check your inbox or spam folder.'
                 };
             }
             
-            // Update last login time
-            await database.ref('users/' + user.uid).update({
-                lastLogin: firebase.database.ServerValue.TIMESTAMP,
-                emailVerified: true
-            });
-            
-            // Check if user data exists, create if missing
+            // 4. Check/update user data in database
             const userRef = database.ref('users/' + user.uid);
             const snapshot = await userRef.once('value');
             
             if (!snapshot.exists()) {
+                // Create user data if missing (shouldn't happen but safety net)
                 await userRef.set({
-                    name: user.displayName || 'New User',
+                    name: user.displayName || email.split('@')[0],
                     email: user.email,
                     role: 'head',
                     avatar: 'avatar1',
                     createdAt: firebase.database.ServerValue.TIMESTAMP,
+                    emailVerified: true,
+                    lastLogin: firebase.database.ServerValue.TIMESTAMP
+                });
+            } else {
+                // Update last login and verification status
+                await userRef.update({
+                    lastLogin: firebase.database.ServerValue.TIMESTAMP,
                     emailVerified: true
                 });
             }
             
-            // Successful login - redirect to dashboard
+            // 5. Successful login - redirect
             window.location.href = 'dashboard.html';
             
         } catch (error) {
