@@ -74,22 +74,143 @@ if (confirmPassword) {
     });
 }
 
+            // Forgot Password Functionality
+            function setupForgotPassword() {
+            const forgotPasswordLink = document.getElementById('forgotPassword');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            const resetEmail = document.getElementById('resetEmail');
+            const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+            const resetBtnText = document.getElementById('resetBtnText');
+            const resetSpinner = document.getElementById('resetSpinner');
+            const forgotPasswordModal = new bootstrap.Modal('#forgotPasswordModal');
+            const resetSuccessToast = new bootstrap.Toast('#resetSuccessToast');
+
+            if (forgotPasswordLink) {
+                forgotPasswordLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                forgotPasswordModal.show();
+                });
+            }
+
+            // Email validation
+            if (resetEmail) {
+                resetEmail.addEventListener('input', function() {
+                const email = this.value.trim();
+                const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                
+                if (email === '') {
+                    this.classList.remove('is-valid', 'is-invalid');
+                } else if (isValid) {
+                    this.classList.add('is-valid');
+                    this.classList.remove('is-invalid');
+                } else {
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                }
+                });
+            }
+
+        // Form submission
+        if (forgotPasswordForm) {
+            forgotPasswordForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = resetEmail.value.trim();
+            
+            // Validate email
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                resetEmail.classList.add('is-invalid');
+                return;
+            }
+            
+            // Show loading state
+            resetBtnText.textContent = 'Sending...';
+            resetSpinner.classList.remove('d-none');
+            resetPasswordBtn.disabled = true;
+            
+            try {
+                await auth.sendPasswordResetEmail(email);
+                
+                // Show success and close modal
+                resetSuccessToast.show();
+                forgotPasswordForm.reset();
+                resetEmail.classList.remove('is-valid', 'is-invalid');
+                
+                setTimeout(() => {
+                forgotPasswordModal.hide();
+                }, 2000);
+                
+            } catch (error) {
+                console.error("Password reset error:", error);
+                
+                let errorMessage = "Failed to send reset email. Please try again.";
+                if (error.code === 'auth/user-not-found') {
+                errorMessage = "No account found with this email.";
+                } else if (error.code === 'auth/invalid-email') {
+                errorMessage = "Please enter a valid email address.";
+                }
+                
+                showAlert(errorMessage, 'danger');
+            } finally {
+                // Reset button state
+                resetBtnText.textContent = 'Send Reset Link';
+                resetSpinner.classList.add('d-none');
+                resetPasswordBtn.disabled = false;
+            }
+            });
+        }
+        }
+
+
+function setupEventListeners() {
+
+  // Email validation for login
+  const loginEmail = document.getElementById('loginEmail');
+  if (loginEmail) {
+    loginEmail.addEventListener('input', function() {
+      validateEmail(this);
+    });
+    loginEmail.addEventListener('blur', function() {
+      validateEmail(this);
+    });
+  }
+
+  // Email validation for signup
+  const signupEmail = document.getElementById('signupEmail');
+  if (signupEmail) {
+    signupEmail.addEventListener('input', function() {
+      validateEmail(this);
+    });
+    signupEmail.addEventListener('blur', function() {
+      validateEmail(this);
+    });
+  }
+}
+
 // Signup Form Submission
-// Enhanced Signup Form Submission
 if (signupForm) {
     signupForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
+        const emailInput = document.getElementById('signupEmail');
+        const email = emailInput.value.trim().toLowerCase();
         const name = document.getElementById('signupName').value.trim();
-        const email = document.getElementById('signupEmail').value.trim().toLowerCase();
         const password = document.getElementById('signupPassword').value;
         const confirmPassword = document.getElementById('signupConfirmPassword').value;
 
-        // Validate inputs
-        if (!name || !email || !password || !confirmPassword) {
+        // Validate email first
+        if (!validateEmail(emailInput)) {
+            showAlert('Please enter a valid email address', 'danger');
+            return;
+        }
+        
+        // Rest of your existing validation checks...
+        if (!name || !password || !confirmPassword) {
             showAlert('Please fill in all fields', 'danger');
             return;
         }
+        
+        // Rest of your signup code remains the same...
 
         if (password !== confirmPassword) {
             showAlert('Passwords do not match', 'danger');
@@ -184,16 +305,51 @@ if (signupForm) {
     });
 }
 
+// Email validation function
+function validateEmail(emailInput) {
+        const email = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
+        const isValid = emailRegex.test(email);
+        
+        if (email === '') {
+            emailInput.classList.remove('is-valid', 'is-invalid');
+            return false;
+        }
+        
+        if (isValid) {
+            emailInput.classList.add('is-valid');
+            emailInput.classList.remove('is-invalid');
+            if (emailInput.nextElementSibling && emailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+            emailInput.nextElementSibling.style.display = 'none';
+            }
+        } else {
+            emailInput.classList.add('is-invalid');
+            emailInput.classList.remove('is-valid');
+            if (emailInput.nextElementSibling && emailInput.nextElementSibling.classList.contains('invalid-feedback')) {
+            emailInput.nextElementSibling.style.display = 'block';
+            }
+        }
+        
+        return isValid;
+}
+
 // Login Form Submission
 // Updated Login Form Submission
 if (loginForm) {
     loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const email = document.getElementById('loginEmail').value.trim();
+        const emailInput = document.getElementById('loginEmail');
+        const email = emailInput.value.trim();
         const password = document.getElementById('loginPassword').value;
         
-        // Show loading state
+        // Validate email before proceeding
+        if (!validateEmail(emailInput)) {
+            showAlert('Please enter a valid email address', 'danger');
+            return;
+        }
+        
+        // Rest of your login code remains the same...
         const submitBtn = loginForm.querySelector('button[type="submit"]');
         const originalBtnText = submitBtn.innerHTML;
         submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Logging in...';
@@ -253,22 +409,22 @@ if (loginForm) {
 }
 
 // Forgot Password Link
-if (forgotPasswordLink) {
-    forgotPasswordLink.addEventListener('click', async function(e) {
-        e.preventDefault();
+// if (forgotPasswordLink) {
+//     forgotPasswordLink.addEventListener('click', async function(e) {
+//         e.preventDefault();
         
-        const email = prompt('Please enter your email address:');
-        if (email) {
-            try {
-                await auth.sendPasswordResetEmail(email);
-                showAlert('Password reset email sent! Please check your inbox.', 'success');
-            } catch (error) {
-                console.error("Password reset error:", error);
-                handleAuthError(error);
-            }
-        }
-    });
-}
+//         const email = prompt('Please enter your email address:');
+//         if (email) {
+//             try {
+//                 await auth.sendPasswordResetEmail(email);
+//                 showAlert('Password reset email sent! Please check your inbox.', 'success');
+//             } catch (error) {
+//                 console.error("Password reset error:", error);
+//                 handleAuthError(error);
+//             }
+//         }
+//     });
+// }
 
 // Resend Verification Email
 if (resendVerificationBtn) {
@@ -399,6 +555,53 @@ function showAlert(message, type) {
         bsAlert.close();
     }, 5000);
 }
+
+// Add real-time email validation
+document.addEventListener('DOMContentLoaded', function() {
+    // For login form
+    const loginEmail = document.getElementById('loginEmail');
+    if (loginEmail) {
+        loginEmail.addEventListener('input', function() {
+            validateEmail(this);
+        });
+        loginEmail.addEventListener('blur', function() {
+            validateEmail(this);
+        });
+        
+        // Add invalid feedback element if it doesn't exist
+        if (!loginEmail.nextElementSibling || !loginEmail.nextElementSibling.classList.contains('invalid-feedback')) {
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback';
+            feedback.textContent = 'Please enter a valid email address (e.g., user@example.com)';
+            loginEmail.parentNode.insertBefore(feedback, loginEmail.nextSibling);
+        }
+    }
+
+    // For signup form
+    const signupEmail = document.getElementById('signupEmail');
+    if (signupEmail) {
+        signupEmail.addEventListener('input', function() {
+            validateEmail(this);
+        });
+        signupEmail.addEventListener('blur', function() {
+            validateEmail(this);
+        });
+        
+        // Add invalid feedback element if it doesn't exist
+        if (!signupEmail.nextElementSibling || !signupEmail.nextElementSibling.classList.contains('invalid-feedback')) {
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback';
+            feedback.textContent = 'Please enter a valid email address (e.g., user@example.com)';
+            signupEmail.parentNode.insertBefore(feedback, signupEmail.nextSibling);
+        }
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  setupForgotPassword();
+});
+
 // Make auth available globally
 window.auth = auth;
 window.database = database;
