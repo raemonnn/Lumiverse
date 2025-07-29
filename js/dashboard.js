@@ -865,7 +865,19 @@ function checkAuthState() {
 function toggleSidebar() {
   sidebar.classList.toggle('show');
   localStorage.setItem('sidebarState', sidebar.classList.contains('show') ? 'open' : 'closed');
+  
+  // Handle overlay for mobile
+  const overlay = document.querySelector('.sidebar-overlay');
+  if (overlay) {
+    if (sidebar.classList.contains('show')) {
+      overlay.style.display = 'block';
+    } else {
+      overlay.style.display = 'none';
+    }
+  }
 }
+
+
 
 function restoreSidebarState() {
   const savedState = localStorage.getItem('sidebarState');
